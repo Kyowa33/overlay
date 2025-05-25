@@ -1,10 +1,11 @@
-// workbox-config.js
 module.exports = {
-  globDirectory: './',
-  globPatterns: [
-    '**/*.{html,js,css,jpeg,jpg,png,svg}'
-  ],
-  swDest: 'service-worker.js',
-  clientsClaim: true,
-  skipWaiting: true,
+	globDirectory: 'build/',
+	globPatterns: [
+		'**/*.{json,png,jpg,jpeg,html,txt,css,js,woff2,svg,woff,ttf,eot}'
+	],
+	swDest: 'build/sw.js',
+	ignoreURLParametersMatching: [
+		/^utm_/,
+		/^fbclid$/
+	]
 };

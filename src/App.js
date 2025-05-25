@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 
 export default function App() {
   const [image, setImage] = useState(null);
+  const [imageName, setImageName] = useState("");
   const [svg, setSvg] = useState(null);
   const [canvasEnabled, setCanvasEnabled] = useState(false);
 
@@ -46,7 +47,7 @@ export default function App() {
     const img = imageRef.current;
     const svgImg = svgRef.current;
 
-    if (!img || !svgImg) return;
+    if (!img) return;
 
     const originalWidth = img.naturalWidth;
     const originalHeight = img.naturalHeight;
@@ -60,6 +61,8 @@ export default function App() {
 
     // Draw base image
     ctx.drawImage(img, 0, 0);
+
+    if (!svgImg) return;
 
     // Calculate SVG size: 45% of image width, preserve aspect ratio
     const svgWidth = originalWidth * 0.45;
@@ -79,6 +82,7 @@ export default function App() {
       const reader = new FileReader();
       reader.onload = (e) => {
         setImage(e.target.result);
+        setImageName(file.name.replace(/\.[^/.]+$/, ""));
       };
       reader.readAsDataURL(file);
     } else {
@@ -101,7 +105,7 @@ export default function App() {
 
   const handleExport = () => {
     const link = document.createElement("a");
-    link.download = "overlay-image.jpg";
+    link.download = imageName+"-overlay.jpg";
     link.href = canvasRef.current.toDataURL("image/jpeg");
     link.click();
   };
